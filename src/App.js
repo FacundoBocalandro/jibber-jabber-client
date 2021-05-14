@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import './main.css';
+import {useState} from "react";
+import {get, post} from "./utils/http";
+
+const emptyPost = {
+    text: ""
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [newPost, setNewPost] = useState({...emptyPost});
+    const [posts, setPosts] = useState([]);
+
+    const createPost = () => {
+        post('posts/create', newPost)
+            .then(res => {
+                setPosts([...posts, res])
+                setNewPost({...emptyPost})
+            })
+    }
+
+    const showPosts = () => {
+        get('posts')
+            .then(res => {
+                setPosts(res);
+            })
+    }
+
+    return (
+        <div className={"app-container"}>
+            <div className={"posts-container"}>
+                <textarea cols="30" rows="10" placeholder={"Enter text..."}
+                          value={newPost.text}
+                          onChange={e => setNewPost({...newPost, text: e.target.value})}/>
+                <button onClick={createPost}>Create post</button>
+                <button onClick={showPosts}>Show all posts</button>
+                {posts.map(post => <div>{post.text}</div>)}
+            </div>
+        </div>
+    )
 }
 
 export default App;

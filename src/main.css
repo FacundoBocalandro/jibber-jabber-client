@@ -1,0 +1,21 @@
+.app-container {
+  display: flex;
+  justify-content: center;
+}
+
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 500px;
+  align-items: center;
+}
+
+.posts-container textarea {
+  width: 100%;
+}
+
+.posts-container button {
+  height: 40px;
+  width: 300px;
+}

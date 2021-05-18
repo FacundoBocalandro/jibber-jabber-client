@@ -1,41 +1,17 @@
 import './main.css';
-import {useState} from "react";
-import {get, post} from "./utils/http";
-
-const emptyPost = {
-    text: ""
-}
+import {Switch, Route, BrowserRouter} from "react-router-dom";
+import Posts from "./posts/Posts";
 
 function App() {
-    const [newPost, setNewPost] = useState({...emptyPost});
-    const [posts, setPosts] = useState([]);
-
-    const createPost = () => {
-        post('posts/create', newPost)
-            .then(res => {
-                setPosts([...posts, res])
-                setNewPost({...emptyPost})
-            })
-    }
-
-    const showPosts = () => {
-        get('posts')
-            .then(res => {
-                setPosts(res);
-            })
-    }
 
     return (
-        <div className={"app-container"}>
-            <div className={"posts-container"}>
-                <textarea cols="30" rows="10" placeholder={"Enter text..."}
-                          value={newPost.text}
-                          onChange={e => setNewPost({...newPost, text: e.target.value})}/>
-                <button onClick={createPost}>Create post</button>
-                <button onClick={showPosts}>Show all posts</button>
-                {posts.map(post => <div>{post.text}</div>)}
+        <BrowserRouter>
+            <div className={"app-container"}>
+                <Switch style={{width: '100%', height: '100%'}}>
+                    <Route path={"/"} component={Posts}/>
+                </Switch>
             </div>
-        </div>
+        </BrowserRouter>
     )
 }
 

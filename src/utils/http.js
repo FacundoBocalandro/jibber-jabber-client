@@ -6,7 +6,7 @@ httpClient.defaults.timeout = 1200000;
 
 const _request = async (url, method, data, config = {}) => {
     return httpClient({
-        url: "http://localhost:8080/" + url,
+        url: "http://localhost:8000/" + url,
         method,
         data,
         ...config.headers, ...config.options

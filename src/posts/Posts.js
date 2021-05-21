@@ -1,0 +1,40 @@
+import React, {useState} from 'react';
+import "./posts.css";
+import {get, post} from "../utils/http";
+
+const emptyPost = {
+    text: ""
+}
+
+const Posts = () => {
+    const [newPost, setNewPost] = useState({...emptyPost});
+    const [posts, setPosts] = useState([]);
+
+    const createPost = () => {
+        post('posts/create', newPost)
+            .then(res => {
+                setPosts([...posts, res])
+                setNewPost({...emptyPost})
+            })
+    }
+
+    const showPosts = () => {
+        get('posts')
+            .then(res => {
+                setPosts(res);
+            })
+    }
+
+    return(
+        <div className={"posts-container"}>
+                <textarea cols="30" rows="10" placeholder={"Enter text..."}
+                          value={newPost.text}
+                          onChange={e => setNewPost({...newPost, text: e.target.value})}/>
+            <button onClick={createPost}>Create post</button>
+            <button onClick={showPosts}>Show all posts</button>
+            {posts.map(post => <div>{post.text}</div>)}
+        </div>
+    )
+}
+
+export default Posts;

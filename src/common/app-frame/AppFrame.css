@@ -1,0 +1,8 @@
+.app-frame {
+    overflow: auto;
+}
+
+.app-frame .content {
+    width: 100vw;
+    height: calc(100vh - 64px);
+}

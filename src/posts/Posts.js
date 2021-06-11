@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import "./posts.css";
+import "./Posts.css";
 import {get, post} from "../utils/http";
 
 const emptyPost = {

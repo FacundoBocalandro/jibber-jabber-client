@@ -3,9 +3,10 @@ import "./Posts.css";
 import Avatar from "@material-ui/core/Avatar";
 import StarIcon from '@material-ui/icons/Star';
 import StarOutlineIcon from '@material-ui/icons/StarOutline';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import {useUserInfo} from "../UserInfoContext";
 
-const Posts = ({posts, dislikePost, likePost}) => {
+const Posts = ({posts, dislikePost, likePost, deletePost}) => {
     const {userInfo} = useUserInfo();
     const [colors, setColors] = useState({
         [userInfo.id]: '#3f51b5'
@@ -29,12 +30,12 @@ const Posts = ({posts, dislikePost, likePost}) => {
         <div className={"posts-list"}>
             {posts.map(post => <Post post={post} userInfo={userInfo}
                                      dislikePost={dislikePost}
-                                     likePost={likePost} randomColor={randomColor}/>)}
+                                     likePost={likePost} deletePost={deletePost} randomColor={randomColor}/>)}
         </div>
     )
 }
 
-const Post = ({post, userInfo, dislikePost, likePost, randomColor}) => {
+const Post = ({post, userInfo, dislikePost, likePost, randomColor, deletePost}) => {
 
     return (
         <div className={"post-container"}>
@@ -46,6 +47,7 @@ const Post = ({post, userInfo, dislikePost, likePost, randomColor}) => {
                 </div>
             </div>
             <div className={"post-footer"}>
+                <DeleteOutlinedIcon className={"delete-icon"} onClick={() => deletePost(post.id)}/>
                 {post.likes.some(userId => userId === userInfo.id) ?
                     <StarIcon className={"liked-star"} onClick={() => dislikePost(post.id)}/> :
                     <StarOutlineIcon className={"disliked-star"} onClick={() => likePost(post.id)}/>}

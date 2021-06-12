@@ -1,40 +1,57 @@
 import React, {useState} from 'react';
 import "./Posts.css";
-import {get, post} from "../utils/http";
+import Avatar from "@material-ui/core/Avatar";
+import StarIcon from '@material-ui/icons/Star';
+import StarOutlineIcon from '@material-ui/icons/StarOutline';
+import {useUserInfo} from "../UserInfoContext";
 
-const emptyPost = {
-    text: ""
-}
+const Posts = ({posts, dislikePost, likePost}) => {
+    const {userInfo} = useUserInfo();
+    const [colors, setColors] = useState({
+        [userInfo.id]: '#3f51b5'
+    })
 
-const Posts = () => {
-    const [newPost, setNewPost] = useState({...emptyPost});
-    const [posts, setPosts] = useState([]);
+    const randomColor = (userId) => {
+        const prevColor = colors[userId];
+        if (prevColor) return prevColor;
 
-    const createPost = () => {
-        post('posts/create', newPost)
-            .then(res => {
-                setPosts([...posts, res])
-                setNewPost({...emptyPost})
-            })
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        setColors({...colors, userId: color})
+        return color;
     }
 
-    const showPosts = () => {
-        get('posts')
-            .then(res => {
-                setPosts(res);
-            })
-    }
 
-    return(
-        <div className={"posts-container"}>
-                <textarea cols="30" rows="10" placeholder={"Enter text..."}
-                          value={newPost.text}
-                          onChange={e => setNewPost({...newPost, text: e.target.value})}/>
-            <button onClick={createPost}>Create post</button>
-            <button onClick={showPosts}>Show all posts</button>
-            {posts.map(post => <div>{post.text}</div>)}
+    return (
+        <div className={"posts-list"}>
+            {posts.map(post => <Post post={post} userInfo={userInfo}
+                                     dislikePost={dislikePost}
+                                     likePost={likePost} randomColor={randomColor}/>)}
         </div>
     )
 }
 
-export default Posts;
+const Post = ({post, userInfo, dislikePost, likePost, randomColor}) => {
+
+    return (
+        <div className={"post-container"}>
+            <div className={"post-text-container"}>
+                <Avatar style={{backgroundColor: `${randomColor(post.userId)}`}}>{post.username.charAt(0).toUpperCase()}</Avatar>
+                <div className={"post-username-and-text"}>
+                    <div className={"post-username"}>@{post.username}</div>
+                    <div className={"post-text"}>{post.text}</div>
+                </div>
+            </div>
+            <div className={"post-footer"}>
+                {post.likes.some(userId => userId === userInfo.id) ?
+                    <StarIcon className={"liked-star"} onClick={() => dislikePost(post.id)}/> :
+                    <StarOutlineIcon className={"disliked-star"} onClick={() => likePost(post.id)}/>}
+            </div>
+        </div>
+    )
+}
+
+export default Posts

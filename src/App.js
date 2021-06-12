@@ -4,6 +4,7 @@ import Register from "./session/Register";
 import Login from "./session/Login";
 import Home from "./home/Home";
 import AppFrame from "./common/app-frame/AppFrame";
+import UserInfoContext from "./UserInfoContext";
 
 function App() {
 
@@ -14,11 +15,13 @@ function App() {
                     <Route exact path={"/"} component={Login}/>
                     <Route path={"/register"} component={Register}/>
                     <Route path='/main' component={({match: {url}}) => ([
-                        <AppFrame key={'app-frame'}>
-                            <Switch style={{width: '100%', height: '100%'}}>
-                                <Route path={`${url}/home`} component={Home}/>
-                            </Switch>
-                        </AppFrame>
+                        <UserInfoContext>
+                            <AppFrame key={'app-frame'}>
+                                <Switch style={{width: '100%', height: '100%'}}>
+                                    <Route path={`${url}/home`} component={Home}/>
+                                </Switch>
+                            </AppFrame>
+                        </UserInfoContext>
                     ])}/>
                     <Redirect to={"/"}/>
                 </Switch>

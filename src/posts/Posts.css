@@ -63,3 +63,9 @@
     color: grey;
     font-size: 30px !important;
 }
+
+.delete-icon {
+    color: #b41a20;
+    font-size: 30px !important;
+    cursor: pointer;
+}

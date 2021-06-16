@@ -40,6 +40,13 @@ const Home = () => {
             })
     }
 
+    const deletePost = (id) => {
+        deleteRequest(`posts/delete/${id}`)
+            .then(() => {
+                setPosts(posts.filter(post => post.id !== id));
+            })
+    }
+
     const addPost = (post) => {
         setPosts([post, ...posts]);
     }
@@ -48,7 +55,7 @@ const Home = () => {
         <div className={"home-screen"}>
             <div className={"posts-container"}>
                 <NewPost addPost={addPost}/>
-                <Posts posts={posts} likePost={likePost} dislikePost={dislikePost}/>
+                <Posts posts={posts} likePost={likePost} dislikePost={dislikePost} deletePost={deletePost}/>
             </div>
         </div>
     )

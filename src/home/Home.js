@@ -22,7 +22,7 @@ const Home = () => {
     }, [])
 
     useEffect(() => {
-        if (users) {
+        if (users && location) {
             let fetchUrl = 'posts';
             if (location.search.includes("userId")) {
                 const userId = location.search.split("=")[1];
@@ -33,7 +33,7 @@ const Home = () => {
 
             get(fetchUrl)
                 .then(res => {
-                    setPosts(res || []);
+                    setPosts(res);
                 })
         }
     }, [location, users])

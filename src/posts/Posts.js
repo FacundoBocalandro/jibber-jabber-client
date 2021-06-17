@@ -21,7 +21,7 @@ const Posts = ({posts, dislikePost, likePost, deletePost}) => {
         for (let i = 0; i < 6; i++) {
             color += letters[Math.floor(Math.random() * 16)];
         }
-        setColors({...colors, userId: color})
+        setColors({...colors, [userId]: color})
         return color;
     }
 

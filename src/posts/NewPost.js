@@ -33,7 +33,7 @@ const NewPost = ({addPost}) => {
                            maxLength={140}
                            className={"new-post-input"}
                            onChange={e => setNewPost({...newPost, text: e.target.value})}
-                           placeholder={"¿Qué está pasando?"}/>
+                           placeholder={"What's happening?"}/>
             </div>
             <div className={"new-post-footer"}>
                 <Button onClick={createPost} disabled={!newPost.text} color={"primary"}

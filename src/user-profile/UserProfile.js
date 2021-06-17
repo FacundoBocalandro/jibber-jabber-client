@@ -4,9 +4,16 @@ import "./UserProfile.css";
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import {Button} from "@material-ui/core";
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import {put} from "../utils/http";
 
 const UserProfile = ({user}) => {
 
+    const onFollow = () => {
+        put(`auth/follow/${user.id}`)
+            .then(() => {
+                //Is following? Handle button state with unfollow
+            })
+    }
 
     return (
         <div>
@@ -16,7 +23,7 @@ const UserProfile = ({user}) => {
                         <Avatar style={{backgroundColor: '#3f51b5'}}>{user.firstName.charAt(0).toUpperCase()}{user.lastName.charAt(0).toUpperCase()}</Avatar>
                         <div className={"user-profile-primary-font"}>{user.firstName} {user.lastName}</div>
                     </div>
-                    <Button color={"primary"}>
+                    <Button color={"primary"} onClick={onFollow}>
                         <PersonAddIcon style={{marginRight: 10}}/>
                         Follow
                     </Button>

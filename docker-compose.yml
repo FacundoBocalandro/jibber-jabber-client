@@ -8,6 +8,7 @@ services:
 
   jibber-jabber-client:
     container_name: jibber-jabber-client
+    image: jibber-jabber-client
     build:
       context: .
       dockerfile: Dockerfile

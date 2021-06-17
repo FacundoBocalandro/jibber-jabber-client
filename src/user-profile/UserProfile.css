@@ -1,0 +1,32 @@
+.user-profile {
+    margin-bottom: 30px;
+}
+
+.avatar-username {
+    display: flex;
+    align-items: center;
+}
+
+.user-profile-secondary-font {
+    font-size: 24px;
+    color: white;
+    font-weight: bolder;
+}
+
+.user-profile-primary-font {
+    margin-left: 10px;
+    font-size: 32px;
+    color: white;
+    font-weight: bolder;
+}
+
+.user-profile-first-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-profile-second-row {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}

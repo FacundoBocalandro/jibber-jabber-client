@@ -4,17 +4,39 @@ import Posts from "../posts/Posts";
 import NewPost from "../posts/NewPost";
 import {deleteRequest, get, put} from "../utils/http";
 import {useUserInfo} from "../UserInfoContext";
+import {useLocation} from "react-router";
+import UserProfile from "../user-profile/UserProfile";
 
 const Home = () => {
     const [posts, setPosts] = useState([]);
+    const [users, setUsers] = useState();
+    const [selectedUser, setSelectedUser] = useState();
     const {userInfo} = useUserInfo();
+    const location = useLocation();
 
     useEffect(() => {
-        get('posts')
+        get('auth')
             .then(res => {
-                setPosts(res);
+                setUsers(res);
             })
     }, [])
+
+    useEffect(() => {
+        if (users && location) {
+            let fetchUrl = 'posts';
+            if (location.search.includes("userId")) {
+                const userId = location.search.split("=")[1];
+                fetchUrl = `posts/user-posts/${userId}`;
+                setSelectedUser(users.find(user => user.id.toString() === userId));
+            }
+            else setSelectedUser(null);
+
+            get(fetchUrl)
+                .then(res => {
+                    setPosts(res);
+                })
+        }
+    }, [location, users])
 
     const likePost = (id) => {
         put(`posts/like/${id}`)
@@ -54,7 +76,11 @@ const Home = () => {
     return (
         <div className={"home-screen"}>
             <div className={"posts-container"}>
-                <NewPost addPost={addPost}/>
+                {
+                    selectedUser ?
+                        <UserProfile user={selectedUser}/> :
+                        <NewPost addPost={addPost}/>
+                }
                 <Posts posts={posts} likePost={likePost} dislikePost={dislikePost} deletePost={deletePost}/>
             </div>
         </div>

@@ -23,7 +23,7 @@ const Home = () => {
 
     useEffect(() => {
         if (users && location) {
-            let fetchUrl = 'posts';
+            let fetchUrl = 'posts/get-all';
             if (location.search.includes("userId")) {
                 const userId = location.search.split("=")[1];
                 fetchUrl = `posts/user-posts/${userId}`;

@@ -10,7 +10,7 @@ const UsersAutocomplete = () => {
     const history = useHistory();
 
     useEffect(() => {
-        get('auth')
+        get('auth/get-all')
             .then(res => {
                 setUsers(res);
             })

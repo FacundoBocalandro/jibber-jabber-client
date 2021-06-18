@@ -4,17 +4,21 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import {get} from "../utils/http";
 import "./UsersAutocomplete.css"
 import {useHistory} from "react-router";
+import {useUserInfo} from "../UserInfoContext";
 
 const UsersAutocomplete = () => {
     const [users, setUsers] = useState([]);
     const history = useHistory();
+    const {userInfo} = useUserInfo();
 
     useEffect(() => {
-        get('auth/get-all')
-            .then(res => {
-                setUsers(res);
-            })
-    }, []);
+        if (userInfo) {
+            get('auth/get-all')
+                .then(res => {
+                    setUsers(res.filter(user => user.id !== userInfo?.id));
+                })
+        }
+    }, [userInfo]);
 
     const getUserOption = (option) => {
         return (

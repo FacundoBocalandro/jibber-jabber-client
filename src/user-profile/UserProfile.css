@@ -30,3 +30,16 @@
     align-items: center;
     margin-top: 15px;
 }
+
+.unfollow {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: #b41a20;
+}
+
+.follow {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+}

@@ -16,6 +16,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import {useHistory} from "react-router";
 import {get} from "../../utils/http";
 import Autocomplete from "../../users-autocomplete/UsersAutocomplete";
+import {useUserInfo} from "../../UserInfoContext";
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -86,6 +87,7 @@ export default function Navbar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const history = useHistory();
+    const {userInfo} = useUserInfo();
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -111,6 +113,11 @@ export default function Navbar() {
             })
     }
 
+    const handleProfile = () => {
+        history.push(`/main/home?userId=${userInfo.id}`);
+        handleMenuClose();
+    }
+
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
@@ -126,7 +133,7 @@ export default function Navbar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <MenuItem onClick={handleProfile}>Profile</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
     );
@@ -176,15 +183,7 @@ export default function Navbar() {
         <div className={classes.grow}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="open drawer"
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography className={classes.title} variant="h6" noWrap>
+                    <Typography className={classes.title} variant="h6" noWrap onClick={() => history.push("/main/home")} style={{cursor: "pointer"}}>
                         Jibber-Jabber
                     </Typography>
                     <div className={classes.search}>
@@ -192,16 +191,6 @@ export default function Navbar() {
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <IconButton aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <MailIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton aria-label="show 17 new notifications" color="inherit">
-                            <Badge badgeContent={17} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
                         <IconButton
                             edge="end"
                             aria-label="account of current user"

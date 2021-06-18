@@ -32,17 +32,19 @@ export const MessageSender = ({sendNewMessage}) => {
         setMessage("");
     }
     return (
-        <div>
-            <TextField
-                id="standard-text"
-                label="Enter message"
-                className={classes.wrapText}
-                onChange={(event) => setMessage(event.target.value)}
-            />
-            <Button variant="contained" color="primary" className={classes.button} onClick={onSend}>
-                <SendIcon />
-            </Button>
-        </div>
+        <>
+            <form className={classes.wrapForm}  noValidate autoComplete="off">
+                <TextField
+                    id="standard-text"
+                    label="Enter message"
+                    className={classes.wrapText}
+                    onChange={(event) => setMessage(event.target.value)}
+                />
+                <Button variant="contained" color="primary" className={classes.button} onClick={onSend}>
+                    <SendIcon />
+                </Button>
+            </form>
+        </>
     )
 }
 

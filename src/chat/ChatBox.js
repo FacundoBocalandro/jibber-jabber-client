@@ -106,8 +106,7 @@ export const ChatBox = ({user}) => {
         }]);
         stompClient.send(`/chat/${user.id}/${userInfo.id}`, {}, JSON.stringify({
             'sender': userInfo.id,
-            'content': message,
-            'time': Date.now(),
+            'content': message
         }));
     };
 

@@ -14,7 +14,7 @@ import Paper from '@material-ui/core/Paper';
 
 const UserProfile = ({user}) => {
     const {userInfo} = useUserInfo();
-    const [following, setFollowing] = useState(userInfo.following);
+    const [following, setFollowing] = useState(userInfo.following || []);
     const [openChat, setOpenChat] = useState(false);
 
     const onFollow = () => {

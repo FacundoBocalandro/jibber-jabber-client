@@ -16,6 +16,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import {useHistory} from "react-router";
 import {get} from "../../utils/http";
 import Autocomplete from "../../users-autocomplete/UsersAutocomplete";
+import {useUserInfo} from "../../UserInfoContext";
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -86,6 +87,7 @@ export default function Navbar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const history = useHistory();
+    const {userInfo} = useUserInfo();
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -111,6 +113,11 @@ export default function Navbar() {
             })
     }
 
+    const handleProfile = () => {
+        history.push(`/main/home?userId=${userInfo.id}`);
+        handleMenuClose();
+    }
+
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
@@ -126,7 +133,7 @@ export default function Navbar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <MenuItem onClick={handleProfile}>Profile</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
     );

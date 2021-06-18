@@ -34,13 +34,17 @@ const UserProfile = ({user}) => {
                         <Avatar style={{backgroundColor: '#3f51b5'}}>{user.firstName.charAt(0).toUpperCase()}{user.lastName.charAt(0).toUpperCase()}</Avatar>
                         <div className={"user-profile-primary-font"}>{user.firstName} {user.lastName}</div>
                     </div>
-                    {following.includes(user.id) ?
-                        <Button color={"secondary"} onClick={onUnFollow}>
-                            <div className={"unfollow"}><ClearIcon style={{marginRight: 5}}/>Unfollow</div>
-                        </Button> :
-                        <Button color={"primary"} onClick={onFollow}>
-                            <div className={"follow"}><PersonAddIcon style={{marginRight: 5}}/>Follow</div>
-                        </Button>
+                    {user.id !== userInfo.id &&
+                        <div>
+                            {following.includes(user.id) ?
+                                <Button color={"secondary"} onClick={onUnFollow}>
+                                    <div className={"unfollow"}><ClearIcon style={{marginRight: 5}}/>Unfollow</div>
+                                </Button> :
+                                <Button color={"primary"} onClick={onFollow}>
+                                    <div className={"follow"}><PersonAddIcon style={{marginRight: 5}}/>Follow</div>
+                                </Button>
+                            }
+                        </div>
                     }
                 </div>
                 <div className={"user-profile-second-row"}>

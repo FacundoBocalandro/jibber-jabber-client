@@ -117,27 +117,22 @@ export const ChatBox = ({user}) => {
         <div className={classes.container}>
             <Paper className={classes.paper} zDepth={2}>
                 <Paper id="style-1" className={classes.messagesBody}>
-                    <MessageLeft
-                        message="Juanpa, estas bien?"
-                        timestamp={new Date().toDateString()}
-                        photoURL=""
-                        displayName="Yao Cabrera"
-                        avatarDisp={true}
-                    />
-                    <MessageRight
-                        message="Con mucho dolor."
-                        timestamp={new Date().toDateString()}
-                        photoURL=""
-                        displayName="Juanpa"
-                        avatarDisp={true}
-                    />
-                    <MessageLeft
-                        message="GANGUESTER DE MIERDA"
-                        timestamp={new Date().toDateString()}
-                        photoURL=""
-                        displayName="Yao Cabrera"
-                        avatarDisp={true}
-                    />
+                    {messages.map(message => message.author.id === user.id ?
+                        <MessageLeft
+                            message={message.text}
+                            timestamp={message.timestamp.toDateString()}
+                            photoURL=""
+                            displayName={`${message.author.firstName} ${message.author.lastName}`}
+                            avatarDisp={true}
+                        /> :
+                        <MessageRight
+                            message={message.text}
+                            timestamp={message.timestamp.toDateString()}
+                            photoURL=""
+                            displayName={`${message.author.firstName} ${message.author.lastName}`}
+                            avatarDisp={true}
+                        />)
+                    }
                 </Paper>
                 <MessageSender sendNewMessage={sendNewMessage}/>
             </Paper>

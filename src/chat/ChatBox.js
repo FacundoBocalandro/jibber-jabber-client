@@ -56,7 +56,7 @@ export const ChatBox = ({user}) => {
             setMessages([...messages, {
                 author: user,
                 text: JSON.parse(chatMessage.body).content,
-                timestamp: new Date(JSON.parse(chatMessage.body).time)
+                timestamp: Date.now()
             }]);
         }
     }
@@ -132,6 +132,13 @@ export const ChatBox = ({user}) => {
                             avatarDisp={true}
                         />)
                     }
+                    <MessageLeft
+                        message={"hola"}
+                        timestamp={new Date().toLocaleString()}
+                        photoURL=""
+                        displayName={"Tomas Lopez"}
+                        avatarDisp={true}
+                    />
                 </Paper>
                 <MessageSender sendNewMessage={sendNewMessage}/>
             </Paper>

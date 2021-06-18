@@ -38,6 +38,7 @@ export const MessageSender = ({sendNewMessage}) => {
                     id="standard-text"
                     label="Enter message"
                     className={classes.wrapText}
+                    value={message}
                     onChange={(event) => setMessage(event.target.value)}
                 />
                 <Button variant="contained" color="primary" className={classes.button} onClick={onSend}>

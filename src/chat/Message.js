@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) =>
             padding: "10px",
             backgroundColor: "#A8DDFD",
             width: "60%",
+            minWidth: "275px",
             //height: "50px",
             textAlign: "left",
             border: "1px solid #97C6E3",

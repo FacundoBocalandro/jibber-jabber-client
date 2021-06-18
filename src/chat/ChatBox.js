@@ -44,9 +44,10 @@ const useStyles = makeStyles((theme) =>
     })
 );
 
+let stompClient;
+
 export const ChatBox = ({user}) => {
     const {userInfo} = useUserInfo();
-    const [stompClient, setStompClient] = useState();
     const [connected, setConnected] = useState();
     const [messages, setMessages] = useState([]);
 
@@ -63,7 +64,7 @@ export const ChatBox = ({user}) => {
 
     const connect = (username, incomingMessage) => {
         let socket = new SockJS('http://localhost:8083/chat');
-        const stomp = Stomp.over(socket);
+        stompClient = Stomp.over(socket);
         stomp.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             setConnected(true);
@@ -71,7 +72,6 @@ export const ChatBox = ({user}) => {
                 incomingMessage(chatMessage);
             });
         });
-        setStompClient(stomp)
     }
 
     useEffect(() => {

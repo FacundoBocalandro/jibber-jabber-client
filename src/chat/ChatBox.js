@@ -48,7 +48,7 @@ export const ChatBox = ({user}) => {
     const {userInfo} = useUserInfo();
     const [stompClient, setStompClient] = useState();
     const [connected, setConnected] = useState();
-    const [messages, setMessages] = useState();
+    const [messages, setMessages] = useState([]);
 
     const incomingMessage = (chatMessage) => {
         if (chatMessage.senderId === user.id) {

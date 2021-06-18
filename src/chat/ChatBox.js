@@ -65,7 +65,7 @@ export const ChatBox = ({user}) => {
     const connect = (username, incomingMessage) => {
         let socket = new SockJS('http://localhost:8083/chat');
         stompClient = Stomp.over(socket);
-        stomp.connect({}, function (frame) {
+        stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             setConnected(true);
             stompClient.subscribe('http://localhost:8083/topic/messages/' + userInfo.id, (chatMessage) => {

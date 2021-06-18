@@ -120,14 +120,14 @@ export const ChatBox = ({user}) => {
                     {messages.map(message => message.author.id === user.id ?
                         <MessageLeft
                             message={message.text}
-                            timestamp={message.timestamp.toDateString()}
+                            timestamp={new Date(message.timestamp).toDateString()}
                             photoURL=""
                             displayName={`${message.author.firstName} ${message.author.lastName}`}
                             avatarDisp={true}
                         /> :
                         <MessageRight
                             message={message.text}
-                            timestamp={message.timestamp.toDateString()}
+                            timestamp={new Date(message.timestamp).toDateString()}
                             photoURL=""
                             displayName={`${message.author.firstName} ${message.author.lastName}`}
                             avatarDisp={true}

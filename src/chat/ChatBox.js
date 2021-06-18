@@ -56,7 +56,7 @@ export const ChatBox = ({user}) => {
     useEffect(() => {
         if (!chat) {
             const userIds = [user.id, userInfo.id];
-            get('messages/chats')
+            get('http://localhost:8083/messages/chats')
                 .then(res => {
                     setChat(res.find(chat => userIds.includes(chat.user1) && userIds.includes(chat.user2)));
                 })
@@ -86,7 +86,7 @@ export const ChatBox = ({user}) => {
 
 
     const connect = (username, incomingMessage) => {
-        let socket = new SockJS('messages/chat');
+        let socket = new SockJS('http://localhost:8083/messages/chat');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);

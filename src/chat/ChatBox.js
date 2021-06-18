@@ -52,7 +52,7 @@ export const ChatBox = ({user}) => {
     const [messages, setMessages] = useState([]);
 
     const incomingMessage = (chatMessage) => {
-        if (chatMessage.sender === user.id) {
+        if (chatMessage.sender == user.id) {
             setMessages([...messages, {
                 author: user,
                 text: JSON.parse(chatMessage.body).content,

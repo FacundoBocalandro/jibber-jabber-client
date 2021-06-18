@@ -7,9 +7,9 @@ import { MessageLeft, MessageRight } from "./Message";
 const useStyles = makeStyles((theme) =>
     createStyles({
         paper: {
-            width: "80vw",
-            height: "80vh",
-            maxWidth: "500px",
+            width: "100%",
+            height: "100%",
+            maxWidth: "700px",
             maxHeight: "700px",
             display: "flex",
             alignItems: "center",
@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) =>
             position: "relative"
         },
         container: {
-            width: "100vw",
-            height: "100vh",
+            width: "100%",
+            height: "100%",
             display: "flex",
             alignItems: "center",
             justifyContent: "center"

@@ -5,7 +5,6 @@ import Login from "./session/Login";
 import Home from "./home/Home";
 import AppFrame from "./common/app-frame/AppFrame";
 import UserInfoContext from "./UserInfoContext";
-import ChatBox from "./chat/ChatBox";
 
 function App() {
 
@@ -20,7 +19,6 @@ function App() {
                             <AppFrame key={'app-frame'}>
                                 <Switch style={{width: '100%', height: '100%'}}>
                                     <Route path={`${url}/home`} component={Home}/>
-                                    <Route path={`${url}/chat`} component={ChatBox}/>
                                 </Switch>
                             </AppFrame>
                         </UserInfoContext>

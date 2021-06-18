@@ -68,7 +68,7 @@ export const ChatBox = ({user}) => {
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             setConnected(true);
-            stompClient.subscribe('topic/messages/' + userInfo.id, (chatMessage) => {
+            stompClient.subscribe('/topic/messages/' + userInfo.id, (chatMessage) => {
                 incomingMessage(chatMessage);
             });
         });

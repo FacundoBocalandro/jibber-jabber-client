@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 
-export const MessageSender = (sendNewMessage) => {
+export const MessageSender = ({sendNewMessage}) => {
     const [message, setMessage] = useState("");
     const classes = useStyles();
 

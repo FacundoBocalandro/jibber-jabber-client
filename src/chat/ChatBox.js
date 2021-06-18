@@ -1,8 +1,11 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";
-import { TextInput } from "./TextInput.js";
+import {MessageSender} from "./MessageSender.js";
 import { MessageLeft, MessageRight } from "./Message";
+import SockJS from 'sockjs-client'
+import Stomp from 'stompjs'
+import {useUserInfo} from "../UserInfoContext";
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -41,7 +44,73 @@ const useStyles = makeStyles((theme) =>
     })
 );
 
-export default function ChatBox() {
+export const ChatBox = ({user}) => {
+    const {userInfo} = useUserInfo();
+    const [stompClient, setStompClient] = useState();
+    const [connected, setConnected] = useState();
+    const [messages, setMessages] = useState();
+
+    const incomingMessage = (chatMessage) => {
+        if (chatMessage.senderId === user.id) {
+            setMessages([...messages, {
+                author: user,
+                text: JSON.parse(chatMessage.body).content,
+                timestamp: new Date(JSON.parse(chatMessage.body).time)
+            }]);
+        }
+    }
+
+
+    const connect = (username, incomingMessage) => {
+        let socket = new SockJS('http://localhost:8083/chat');
+        setStompClient(Stomp.over(socket));
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+            setConnected(true);
+            stompClient.subscribe('/topic/messages/' + userInfo.id, (chatMessage) => {
+                incomingMessage(chatMessage);
+            });
+        });
+    }
+
+    useEffect(() => {
+        let head = document.head;
+        let link = document.createElement("link");
+        link.rel = "stylesheet";
+
+        link.href = "https://unpkg.com/@progress/kendo-theme-material@latest/dist/all.css";
+        let link2 = document.createElement("link");
+        link2.rel = "stylesheet";
+        link2.integrity = "sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T";
+        link2.crossOrigin = "anonymous";
+        link2.href = "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css";
+        head.prepend(link);
+
+        head.appendChild(link2);
+        connect(userInfo.id, incomingMessage);
+
+        return () => {
+            if (connected) {
+                stompClient.disconnect();
+                setConnected(false);
+            }
+        }
+    },[]);
+
+    const sendNewMessage = (message) => {
+        setMessages([...messages, {
+            author: userInfo,
+            text: message,
+            timestamp: Date.now()
+        }]);
+        stompClient.send(`/chat/${user.id}/${userInfo.id}`, {}, JSON.stringify({
+            'sender': userInfo.id,
+            'content': message,
+            'time': Date.now(),
+        }));
+    };
+
+
     const classes = useStyles();
     return (
         <div className={classes.container}>
@@ -69,7 +138,7 @@ export default function ChatBox() {
                         avatarDisp={true}
                     />
                 </Paper>
-                <TextInput />
+                <MessageSender onSend={sendNewMessage}/>
             </Paper>
         </div>
     );

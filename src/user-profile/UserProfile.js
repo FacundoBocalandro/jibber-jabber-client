@@ -8,7 +8,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import {put} from "../utils/http";
 import {useUserInfo} from "../UserInfoContext";
 import SendIcon from '@material-ui/icons/Send';
-import ChatBox from "../chat/ChatBox";
+import {ChatBox} from "../chat/ChatBox";
 import Draggable from 'react-draggable';
 import Paper from '@material-ui/core/Paper';
 
@@ -79,7 +79,7 @@ const UserProfile = ({user}) => {
                     <DialogTitle style={{ cursor: 'move', textAlign: 'center' }} id="draggable-dialog-title">
                         <Typography variant={"h4"}>{user.firstName} {user.lastName}</Typography>
                     </DialogTitle>
-                    <ChatBox/>
+                    <ChatBox user={user}/>
                 </Dialog>
             </div>
         </div>

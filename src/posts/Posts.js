@@ -47,7 +47,7 @@ const Post = ({post, userInfo, dislikePost, likePost, randomColor, deletePost}) 
                 </div>
             </div>
             <div className={"post-footer"}>
-                <DeleteOutlinedIcon className={"delete-icon"} onClick={() => deletePost(post.id)}/>
+                {post.userId === userInfo.id && <DeleteOutlinedIcon className={"delete-icon"} onClick={() => deletePost(post.id)}/>}
                 {post.likes.some(userId => userId === userInfo.id) ?
                     <StarIcon className={"liked-star"} onClick={() => dislikePost(post.id)}/> :
                     <StarOutlineIcon className={"disliked-star"} onClick={() => likePost(post.id)}/>}

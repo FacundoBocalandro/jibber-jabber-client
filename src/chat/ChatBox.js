@@ -6,6 +6,7 @@ import { MessageLeft, MessageRight } from "./Message";
 import SockJS from 'sockjs-client'
 import Stomp from 'stompjs'
 import {useUserInfo} from "../UserInfoContext";
+import {get} from "../utils/http";
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -50,6 +51,28 @@ export const ChatBox = ({user}) => {
     const {userInfo} = useUserInfo();
     const [connected, setConnected] = useState();
     const [messages, setMessages] = useState([]);
+    const [chat, setChat] = useState();
+
+    useEffect(() => {
+        if (!chat) {
+            const userIds = [user.id, userInfo.id];
+            get('messages/chats')
+                .then(res => {
+                    setChat(res.find(chat => userIds.includes(chat.user1) && userIds.includes(chat.user2)));
+                })
+        }
+    }, [])
+
+    useEffect(() => {
+        if (chat) {
+            const chatMessages = chat.messages.map(message => ({
+                author: message.senderId,
+                text: message.content,
+                timestamp: message.time
+            }));
+            setMessages([chatMessages, ...messages]);
+        }
+    }, [chat])
 
     const incomingMessage = (chatMessage) => {
         if (JSON.parse(chatMessage.body).sender === user.id) {

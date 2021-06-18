@@ -63,12 +63,12 @@ export const ChatBox = ({user}) => {
 
 
     const connect = (username, incomingMessage) => {
-        let socket = new SockJS('http://localhost:8083/chat');
+        let socket = new SockJS('messages/chat');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             setConnected(true);
-            stompClient.subscribe('/topic/messages/' + userInfo.id, (chatMessage) => {
+            stompClient.subscribe('messages/topic/messages/' + userInfo.id, (chatMessage) => {
                 incomingMessage(chatMessage);
             });
         });
@@ -104,7 +104,7 @@ export const ChatBox = ({user}) => {
             text: message,
             timestamp: Date.now()
         }]);
-        stompClient.send(`/chat/${user.id}/${userInfo.id}`, {}, JSON.stringify({
+        stompClient.send(`messages/chat/${user.id}/${userInfo.id}`, {}, JSON.stringify({
             'sender': userInfo.id,
             'content': message
         }));

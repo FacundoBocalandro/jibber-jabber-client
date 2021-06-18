@@ -15,7 +15,7 @@ const Home = () => {
     const location = useLocation();
 
     useEffect(() => {
-        get('auth')
+        get('auth/get-all')
             .then(res => {
                 setUsers(res);
             })

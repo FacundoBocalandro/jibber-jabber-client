@@ -13,7 +13,7 @@ const UsersAutocomplete = () => {
 
     useEffect(() => {
         if (userInfo) {
-            get('auth')
+            get('auth/get-all')
                 .then(res => {
                     setUsers(res.filter(user => user.id !== userInfo?.id));
                 })

@@ -139,7 +139,7 @@ export const ChatBox = ({user}) => {
                         avatarDisp={true}
                     />
                 </Paper>
-                <MessageSender onSend={sendNewMessage}/>
+                <MessageSender sendNewMessage={sendNewMessage}/>
             </Paper>
         </div>
     );

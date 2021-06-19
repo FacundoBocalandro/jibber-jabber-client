@@ -23,7 +23,7 @@ jobs:
 
       - name: Connect via SSH and deploy
         run: |
-          ssh -i $SSH_KEY_PATH facundobocalandro@${{secrets.DEV_SSH_HOST}}
+          ssh -tt -i $SSH_KEY_PATH facundobocalandro@${{secrets.DEV_SSH_HOST}}
           sudo ~/deploy-service.sh client
         shell: bash
         env:

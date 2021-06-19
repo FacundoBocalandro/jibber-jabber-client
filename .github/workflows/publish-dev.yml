@@ -23,6 +23,6 @@ jobs:
 
       - name: Connect via SSH and deploy
         run: |
-          ssh -i $SSH_KEY_PATH facundobocalandro@${{secrets.DEV_SSH_HOST}} bash ~/deploy-service.sh client
+          ssh -i $SSH_KEY_PATH facundobocalandro@${{secrets.DEV_SSH_HOST}} 'sudo ~/deploy-service.sh client'
         env:
           SSH_KEY_PATH: ${{ github.workspace }}/../private.key

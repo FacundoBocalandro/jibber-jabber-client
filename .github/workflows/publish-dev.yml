@@ -13,8 +13,8 @@ jobs:
       - name: Create SSH key
         run: |
           mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ../private.pem
-          sudo chmod 600 ../private.pem
+          echo "$SSH_PRIVATE_KEY" > ../private.key
+          sudo chmod 600 ../private.key
           echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
         shell: bash
         env:
@@ -27,4 +27,4 @@ jobs:
           sudo ~/deploy-service client
         shell: bash
         env:
-          SSH_KEY_PATH: ${{ github.workspace }}/../private.pem
+          SSH_KEY_PATH: ${{ github.workspace }}/../private.key

@@ -33,18 +33,19 @@ export const MessageSender = ({sendNewMessage}) => {
     }
     return (
         <>
-            <form className={classes.wrapForm}  noValidate autoComplete="off">
+            <div className={classes.wrapForm}>
                 <TextField
                     id="standard-text"
                     label="Enter message"
                     className={classes.wrapText}
                     value={message}
                     onChange={(event) => setMessage(event.target.value)}
+                    onKeyUp={(e) => e.keyCode === 13 && onSend()}
                 />
                 <Button variant="contained" color="primary" className={classes.button} onClick={onSend}>
                     <SendIcon />
                 </Button>
-            </form>
+            </div>
         </>
     )
 }

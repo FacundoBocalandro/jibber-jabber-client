@@ -78,7 +78,7 @@ const Home = () => {
             <div className={"posts-container"}>
                 {
                     selectedUser ?
-                        <UserProfile user={selectedUser}/> :
+                        <UserProfile currentUser={selectedUser}/> :
                         <NewPost addPost={addPost}/>
                 }
                 <Posts posts={posts} likePost={likePost} dislikePost={dislikePost} deletePost={deletePost}/>

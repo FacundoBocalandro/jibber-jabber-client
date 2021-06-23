@@ -22,8 +22,9 @@ const UserProfile = ({currentUser}) => {
     const [openEditUser, setOpenEditUser] = useState(false);
 
     useEffect(() => {
-        setUser(currentUser);
-    }, [currentUser]);
+        const selectedUser = currentUser.id === userInfo.id ? userInfo : currentUser;
+        setUser(selectedUser);
+    }, [currentUser, userInfo]);
 
     const onFollow = () => {
         put(`auth/follow/${user.id}`)

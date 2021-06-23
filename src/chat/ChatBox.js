@@ -32,13 +32,15 @@ const useStyles = makeStyles((theme) =>
             height: "100%",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center"
+            justifyContent: "center",
+            marginBottom: '15px'
         },
         messagesBody: {
             width: "calc( 100% - 20px )",
             margin: 10,
             overflowY: "scroll",
             height: "calc( 100% - 80px )",
+            minHeight: "30vh",
             padding: 10
         }
     })

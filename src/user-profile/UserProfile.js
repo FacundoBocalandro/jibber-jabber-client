@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import "./UserProfile.css";
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
@@ -11,11 +11,20 @@ import SendIcon from '@material-ui/icons/Send';
 import {ChatBox} from "../chat/ChatBox";
 import Draggable from 'react-draggable';
 import Paper from '@material-ui/core/Paper';
+import EditIcon from '@material-ui/icons/Edit';
+import EditUserModal from "./EditUserModal";
 
-const UserProfile = ({user}) => {
+const UserProfile = ({currentUser}) => {
     const {userInfo} = useUserInfo();
     const [following, setFollowing] = useState(userInfo.following || []);
     const [openChat, setOpenChat] = useState(false);
+    const [user, setUser] = useState(currentUser);
+    const [openEditUser, setOpenEditUser] = useState(false);
+
+    useEffect(() => {
+        const selectedUser = currentUser.id === userInfo.id ? userInfo : currentUser;
+        setUser(selectedUser);
+    }, [currentUser, userInfo]);
 
     const onFollow = () => {
         put(`auth/follow/${user.id}`)
@@ -44,7 +53,10 @@ const UserProfile = ({user}) => {
                         <Avatar style={{backgroundColor: '#3f51b5'}}>{user.firstName.charAt(0).toUpperCase()}{user.lastName.charAt(0).toUpperCase()}</Avatar>
                         <div className={"user-profile-primary-font"}>{user.firstName} {user.lastName}</div>
                     </div>
-                    {user.id !== userInfo.id &&
+                    {user.id === userInfo.id ?
+                        <Button color={"primary"} onClick={() => setOpenEditUser(true)}>
+                            <div className={"edit-user"}><EditIcon style={{marginRight: 5}}/>Edit</div>
+                        </Button> :
                         <div>
                             {following.includes(user.id) ?
                                 <Button color={"secondary"} onClick={onUnFollow}>
@@ -59,14 +71,17 @@ const UserProfile = ({user}) => {
                 </div>
                 <div className={"second-row-container"}>
                     <div className={"user-profile-second-row"}>
-                        <div className={"user-profile-secondary-font"} style={{marginRight: 25}}>@{user.username}</div>
-                        <MailOutlineIcon className={"user-profile-secondary-font"} style={{marginRight: 5}}/>
-                        <div className={"user-profile-secondary-font"}>{user.email}</div>
+                        <div className={"user-profile-secondary-font"} style={{marginBottom: 10}}>@{user.username}</div>
+                        <div className={"user-profile-secondary-font"}>
+                            <MailOutlineIcon className={"user-profile-secondary-font"} style={{marginRight: 5}}/> {user.email}
+                        </div>
                     </div>
-                    <IconButton color={"primary"} onClick={() => setOpenChat(true)}>
-                        <SendIcon style={{marginRight: 5}}/>
-                        CHAT
-                    </IconButton>
+                    {user.id !== userInfo.id &&
+                        <IconButton color={"primary"} onClick={() => setOpenChat(true)}>
+                            <SendIcon style={{marginRight: 5}}/>
+                            CHAT
+                        </IconButton>
+                    }
                 </div>
                 <Dialog
                     open={openChat}
@@ -81,6 +96,7 @@ const UserProfile = ({user}) => {
                     </DialogTitle>
                     <ChatBox user={user}/>
                 </Dialog>
+                <EditUserModal open={openEditUser} onClose={() => setOpenEditUser(false)} setUpdatedUser={setUser}/>
             </div>
         </div>
     )

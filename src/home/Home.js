@@ -36,7 +36,7 @@ const Home = () => {
                     setPosts(res);
                 })
         }
-    }, [location, users])
+    }, [location, users, userInfo])
 
     const likePost = (id) => {
         put(`posts/like/${id}`)
